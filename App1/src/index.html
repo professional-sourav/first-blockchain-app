@@ -15,6 +15,18 @@
     <div id="content">
       <h1 id="account"></h1>
       <ul id="tasks"></ul>
+      <div id="creat_new_task">       
+        <form method="post" id="frm_creat_new_task" onsubmit="App.createTask(event)">
+          <div class="mb-3">
+            <label for="input_create_new_task" class="form-label">New Task Content</label>
+            <textarea class="form-control" id="input_create_new_task" rows="3"></textarea>
+          </div>
+  
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-3">Add Task</button>
+          </div>
+        </form>
+      </div>
     </div>
     <!-- Optional JavaScript; choose one of the two! -->
 

@@ -105,7 +105,55 @@ App = {
 
             console.log(task);
 
-            $("#tasks").append(`<li><span>${task.content}</span> <strong>${task.completed ? "COMPLETED" : "In Progress"}</strong></li>`);
+            $("#tasks").append(
+                `<li>                    
+                    <div class="form-check form-switch">
+                        <input 
+                        class="form-check-input" 
+                        type="checkbox" 
+                        data-task-id="${index}"
+                        id="toggle${index}"
+                        ${ task.completed ? "checked" : "" }
+                        onchange="App.toggleComplete(event)">
+                        <label class="form-check-label" for="toggle${index}">
+                            <span>${task.content}</span> 
+                            <strong>${task.completed ? "COMPLETED" : "In Progress"}</strong>
+                        </label>
+                    </div>
+                </li>`
+            );
+        }
+    },
+
+    createTask: async (event) => {
+
+        event.preventDefault();
+
+        if ( $("#input_create_new_task").val().length > 5 ) {
+
+            const taskCount = await App.todoList.taskCount();
+
+            await App.todoList.createTask( $("#input_create_new_task").val(), {
+                from: App.account[0]
+            } );
+
+            // console.log( await App.todoList.tasks(taskCount) );
+
+            window.location.reload();
+        }
+    },
+
+    toggleComplete: async (event) => {
+
+        if ( event.target.checked ) {
+
+            const task_id = $( event.target ).attr('data-task-id');
+
+            await App.todoList.toggleCompleted(task_id, {
+                from: App.account[0]
+            });
+            
+            window.location.reload();
         }
     }
 }
